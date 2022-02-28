@@ -19,6 +19,8 @@ db.StockOptions = require("../models/StockOptions")(sequelize, DataTypes)
 db.AccountDistribution = require("../models/AccountDistribution")(sequelize, DataTypes)
 
 db.Report = require("../models/Report")(sequelize, DataTypes)
+db.Prospect = require("../models/Prospect")(sequelize, DataTypes)
+db.Event = require("../models/Event")(sequelize, DataTypes)
 
 /* key mapping for client-account */
 db.Client.hasMany(db.Account, {
@@ -47,5 +49,14 @@ db.Account.hasMany(db.Report, {
   hooks: true
 });
 db.Report.belongsTo(db.Account);
+
+/* key mapping for event-prospect */
+db.Prospect.hasMany(db.Event, {
+  as: 'events',
+  foreignKey: 'prospectId',
+  onDelete: 'CASCADE',
+  hooks: true
+});
+db.Event.belongsTo(db.Prospect);
 
 module.exports = db;
