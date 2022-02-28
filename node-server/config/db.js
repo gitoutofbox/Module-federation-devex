@@ -18,6 +18,8 @@ db.Account = require("../models/Account")(sequelize, DataTypes)
 db.StockOptions = require("../models/StockOptions")(sequelize, DataTypes)
 db.AccountDistribution = require("../models/AccountDistribution")(sequelize, DataTypes)
 
+db.Report = require("../models/Report")(sequelize, DataTypes)
+
 /* key mapping for client-account */
 db.Client.hasMany(db.Account, {
   as: 'accounts',
@@ -27,6 +29,7 @@ db.Client.hasMany(db.Account, {
 });
 db.Account.belongsTo(db.Client);
 
+/* key mapping for accountdistributions */
 db.Account.belongsToMany(db.StockOptions, {
   through:  db.AccountDistribution,
   as: 'distribution',
@@ -35,5 +38,14 @@ db.Account.belongsToMany(db.StockOptions, {
   onDelete: 'CASCADE',
   hooks: true
 });
+
+/* key mapping for account-report */
+db.Account.hasMany(db.Report, {
+  as: 'reports',
+  foreignKey: 'accountId',
+  onDelete: 'CASCADE',
+  hooks: true
+});
+db.Report.belongsTo(db.Account);
 
 module.exports = db;
