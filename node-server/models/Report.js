@@ -8,6 +8,9 @@ module.exports = (sequelize, DataTypes) => {
         accountId: {
             type: DataTypes.INTEGER,
         },
+        file: {
+            type: DataTypes.STRING,
+        },
         fromDate: {
             type: DataTypes.DATE,
         },
